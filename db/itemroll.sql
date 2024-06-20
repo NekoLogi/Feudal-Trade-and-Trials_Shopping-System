@@ -1,0 +1,8 @@
+CREATE TABLE itemroll (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    displayname VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    amount INT NOT NULL DEFAULT 0,
+    sale INT NOT NULL DEFAULT 0,
+    UNIQUE(name)
+);

@@ -1,0 +1,9 @@
+1. Begrenzter Menge an Items, je hörer Seltenheit.
+
+2. Item-Rolls in Datenbank speichern.
+
+3. Drop %-chance je Seltenheit.
+
+4. Item-Rolls daily rerolls.
+
+5. Chance das einzelne Items im Sales sind.

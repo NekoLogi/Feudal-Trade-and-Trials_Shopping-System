@@ -1,0 +1,8 @@
+CREATE TABLE shop (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tier INT NOT NULL DEFAULT 1,
+    displayname VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    recycled BOOLEAN NOT NULL DEFAULT FALSE,
+    UNIQUE(name)
+);
