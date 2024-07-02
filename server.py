@@ -22,7 +22,7 @@ def hello_world():
     if request.method == 'GET':
         return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         name = request.form['name']
@@ -211,7 +211,7 @@ def banking_card():
 
 
 # Shop functions
-@app.route('/shop/items', methods=['GET'])
+@app.route('/shop/items/count', methods=['GET'])
 def shop_get_item_count():
     db = DB(db_host, db_user, db_password, db_database)
     count = db.shop_get_item_count()
@@ -219,6 +219,34 @@ def shop_get_item_count():
         return jsonify(count=count)
     print(count)
     return error('Failed to get item count!')
+
+@app.route('/shop/items', methods=['GET'])
+def shop_get_items():
+    db = DB(db_host, db_user, db_password, db_database)
+    roller_items = db.roller_get_all_items()
+    if roller_items == None:
+        return error("No items recycled yet to display.")
+    
+    shop_items = []
+    for i in roller_items:
+        print(i)
+        item = db.shop_get_item_by_name(i.get("name"))
+        if item == None:
+            return error("Can't find item: " + to_json(item))
+        shop_items.append(item)
+    items = []
+    for i in range(0, len(roller_items)):
+        currency = tier_to_currency(shop_items[i].get("tier"))
+        end_price = calculate_sale_price(currency, roller_items[i].get("sale"))
+        items.append({
+            "id":roller_items[i].get("id"),
+            "name":shop_items[i].get("name"),
+            "displayname":shop_items[i].get("displayname"),
+            "tier":shop_items[i].get("tier"),
+            "currency":end_price,
+            "currencyname":currency_name
+        })
+    return to_json(items)
 
 @app.route('/shop/item', methods=['GET'])
 def shop_get_item():
@@ -326,11 +354,12 @@ def shop_recycle():
     return json
 
 
+
 # utils
 def to_json(data):
     try:
         return json.loads(data)
-    except:
+    except Exception:
         return json.dumps(data)
 
 def error(message):

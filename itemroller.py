@@ -98,10 +98,19 @@ def main(amount):
         sale = None
         if Chance(1):
             sale = get_sale_pct()
+        item = get_new_item()
 
-        tier = get_tier_rating()
-        db_items = db.shop_get_item_by_tier(tier)
-        item = db_items[random.randrange(len(db_items) - 1)]
+        item_exists = False
+        for e in items:
+            for f in range(30):
+                if e.get("name") == item.get("name"):
+                    item_exists = True
+                    item = get_new_item()
+                else:
+                    item_exists = False
+        if item_exists:
+            continue
+
         items.append({
             'tier': item.get('tier'),
             'displayname': item.get('displayname'),
@@ -111,9 +120,25 @@ def main(amount):
             })
     db.roller_table_delete()
     db.roller_table_create()
-    for i in range(0, amount):
+    for i in range(0, len(items)):
         db.roller_item_add(items[i]['name'], items[i]['amount'], items[i]['sale'])
-        print(f"{items[i]['tier']} {calculate_sale_price(tier_to_currency(items[i]['tier']), items[i]['sale'])} {items[i]['name']}")
+        print(f"Tier: {items[i]['tier']} Price: {calculate_sale_price(tier_to_currency(items[i]['tier']), items[i]['sale'])} Id: {items[i]['name']}")
+
+def get_new_item():
+    db_items = None
+    for i in range(10):
+        if db_items == None or len(db_items) == 0:
+            tier = get_tier_rating()
+            db_items = db.shop_get_item_by_tier(tier)
+            sleep(0.5)
+        else:
+            break
+    item = None
+    if len(db_items) == 1:
+        item = db_items[0]
+    else:
+        item = db_items[random.randrange(len(db_items) - 1)]
+    return item
 
 
 
@@ -123,6 +148,7 @@ def main(amount):
 if __name__ == '__main__':
     first_run = False
     check_time = load_time(time_file)
+    check_time = None
     if check_time == None:
         check_time = get_current_date()
         save_time(check_time, time_file)
@@ -131,5 +157,5 @@ if __name__ == '__main__':
     #while True:
         if has_days_passed(check_time, 1) or first_run:
             first_run = False
-            main(10)
+            main(8)
         sleep(1)
