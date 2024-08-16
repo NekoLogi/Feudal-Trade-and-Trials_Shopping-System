@@ -1,8 +1,10 @@
 local requester = require("request_handler")
 local file_path = "disk/account.json"
-local monitor = peripheral.find("monitor")
+monitor = peripheral.wrap("top")
 monitor.setTextScale(0.5)
 monitor.clear()
+
+diskPosition = "front"
 
 local function monPrint(message)
     monitor.scroll(-1)
@@ -22,20 +24,20 @@ local function recycle(accountData)
         if item ~= nil then
             local jsonData = {
                 uuid = accountData.uuid,
-                from_name = accountData.from_name,
-                id_name = item.name,
+                from = accountData.from,
+                name = item.name,
                 amount = item.count
             }
             local json = requester.pairsToJson(jsonData)
-            local result = requester.put("http://127.0.0.1:5000/shop/recycle", json)
+            local result = requester.put("/shop/recycle", json)
             monPrint("--------------------------------")
             if result.error ~= nil then
-                monPrint("# " .. result.error .. " @".. jsonData.id_name)
+                monPrint("# " .. result.error .. " @".. jsonData.name)
                 turtle.turnLeft()
                 turtle.drop()
                 turtle.turnRight()
             else
-                monPrint("  Added: " .. result.currency .. " " .. result.currency_name)
+                monPrint("  Added: " .. result.price .. " " .. result.currency)
                 monPrint("- Recycled: " .. result.display_name .. " " .. result.amount .. "x")
                 turtle.dropDown()
             end
@@ -53,7 +55,7 @@ monClear()
 while true do
     monPrint("Checking for Card...")
     local accountData = nil
-    if disk.isPresent("front") then
+    if disk.isPresent(diskPosition) then
         if fs.exists(file_path) then
             monPrint("Reading card data...")
             local file = fs.open(file_path, "r")
@@ -66,17 +68,17 @@ while true do
             os.sleep(5)
             goto reboot
         end
-        local user = requester.get("http://127.0.0.1:5000/banking/account?uuid=" .. accountData.uuid .. "&username=" .. accountData.from_name)
+        local user = requester.get("/banking/account?uuid=" .. accountData.uuid .. "&from=" .. accountData.from)
         if user.error ~= nil then
             monPrint("Failed to login: " .. user.error)
             os.sleep(5)
             goto reboot
         end
-        monPrint("Logged in with " .. user.username)
+        monPrint("Logged in with " .. user.from)
 
 
         while true do
-            if not disk.isPresent("front") then
+            if not disk.isPresent(diskPosition) then
                 goto reboot
             end        
             recycle(accountData)

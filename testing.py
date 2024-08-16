@@ -2,22 +2,38 @@ import requests
 import json
 import uuid
 
-class Transfer:
-    def __init__(self, username, password):
-        self.from_name = username
-        self.pin = password
+values = {
+    "uuid":"9d314e73-8497-4c95-a713-7e51fe171ccd",
+    "from":"ganning",
+    #"pin":"gandalf123",
+    #"to":3,
+    "amount":50,
+    #"id":11,
+    "name":"minecraft:book",
+}
 
-def post():
-    link = 'banking/card'
+def post(values, link):
     url = f'http://127.0.0.1:5000/{link}'
-    data = json.dumps(Transfer('ganning', 'adolf123').__dict__)
+    data = json.dumps(values)
     return requests.post(url, data).content
 
+def put(values, link):
+    url = f'http://127.0.0.1:5000/{link}'
+    data = json.dumps(values)
+    return requests.put(url, data).content
+
 def get():
-    link = 'banking/account'
-    arguments = f'?uuid=test&username=katse2'
+    link = 'shop/converter'
+    arguments = f'?name=minecraft:book&amount=5'
     url = f'http://127.0.0.1:5000/{link}{arguments}'
     return requests.get(url).json()
 
+def delete():
+    link = 'banking/account'
+    arguments = f'?name=minecraft:book&amount=5'
+    url = f'http://127.0.0.1:5000/{link}{arguments}'
+    return requests.delete(url).json()
 
-print(get())
+
+#print(get())
+print(put(values, "shop/recycle"))

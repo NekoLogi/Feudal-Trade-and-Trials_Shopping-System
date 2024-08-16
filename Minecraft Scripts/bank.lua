@@ -1,5 +1,90 @@
 local basalt = require("basalt") -- we need basalt here
-local utils = require("bank_utils")
+local requester = require("request_handler")
+
+
+diskPosition = "bottom"
+FILE_PATH = "disk/account.json"
+
+local function createCard(username, pin)
+    if not disk.isPresent(diskPosition) then
+        return "Insert disk and try again!"
+    end
+    local jsonData = {
+        from = username,
+        pin = pin
+    }
+    local json = requester.pairsToJson(jsonData)
+    local user = requester.post("/banking/card", json)
+    local file = fs.open(FILE_PATH, "w")
+    if user.error ~= nil then
+        return user.error
+    end
+    disk.setLabel(diskPosition, user.from .. " : " .. user.id)
+    file.write(requester.pairsToJson({uuid = user.uuid, from = user.from, id = user.id}))
+    file.close()
+    return "Card created successfully, take from drive."
+end
+
+local function createAccount(username, pin)
+    if not disk.isPresent(diskPosition) then
+        return "Insert disk and try again!"
+    end
+    local jsonData = {
+        from = username,
+        pin = pin
+    }
+    local json = requester.pairsToJson(jsonData)
+    local user = requester.post("/banking/account", json)
+    if user.error ~= nil then
+        return nil
+    end
+    return user
+end
+
+local function getAccount()
+    if not disk.isPresent(diskPosition) then
+        return "Insert disk and try again!"
+    end
+    local accountData = nil
+    if fs.exists(FILE_PATH) then
+        local file = fs.open(FILE_PATH, "r")
+        local json = file.readAll()
+        file.close()
+        accountData = textutils.unserialiseJSON(json)
+    end
+    if accountData == nil then
+        return "Failed to read card data!"
+    end
+    local user = requester.get("/banking/account?uuid=" .. accountData.uuid .. "&from=" .. accountData.from)
+    if user.error ~= nil then
+        return "Failed to login: " .. user.error
+    end
+    return "Balance: " .. user.balance .. " " .. user.currency
+end
+
+local function deleteAccount(pin)
+    if not disk.isPresent(diskPosition) then
+        return "Insert disk and try again!"
+    end
+    local accountData = nil
+    if fs.exists(FILE_PATH) then
+        local file = fs.open(FILE_PATH, "r")
+        local json = file.readAll()
+        file.close()
+        accountData = textutils.unserialiseJSON(json)
+    end
+    if accountData == nil then
+        return "Failed to read card data!"
+    end
+    local user = requester.delete("/banking/account?uuid=" .. accountData.uuid .. "&from=" .. accountData.from .. "&pin=" .. pin)
+    if user.error ~= nil then
+        return "Failed to login: " .. user.error
+    end
+    return "Account '" .. accountData.from .. "' deleted!"
+end
+
+
+
 
 local main = basalt.createFrame():setTheme({FrameBG = colors.lightGray, FrameFG = colors.black}) -- we change the default bg and fg color for frames
 
@@ -35,23 +120,23 @@ sub[1]:addLabel()
     :setText("MineTaler Bank!")
     :setPosition(19,4)
 sub[1]:addLabel()
-    :setText("Navigieren kÃ¶nnen Sie mit den Tabs oben angezeigt.")
+    :setText("Navigieren konnen Sie mit den Tabs oben angezeigt.")
     :setPosition(2,8)
 sub[1]:addLabel()
-    :setText("[Account]: Hier kÃ¶nnen Sie ein Konto erstellen")
+    :setText("[Account]: Hier konnen Sie ein Konto erstellen")
     :setPosition(1,10)
 sub[1]:addLabel()
     :setText("und Kontodaten verwalten.")
     :setPosition(12,11)
 sub[1]:addLabel()
-    :setText("[Karte]: Hier kÃ¶nnen Sie eine verlorene Karte")
+    :setText("[Karte]: Hier konnen Sie eine verlorene Karte")
     :setPosition(1,12)
 sub[1]:addLabel()
     :setText("erstellen, sofern Sie die Daten kennen.")
     :setPosition(10,13)
 
 sub[2]:addLabel()
-    :setText("WÃ¤hle eine Option:")
+    :setText("Wahle eine Option:")
     :setPosition(17,3)
 sub[2]:addButton()
     :setText("Erstellen")
@@ -81,11 +166,11 @@ sub[2]:addButton()
                 :setPosition(20,14)
                 :onClick(
                     function()
-                        local user = utils.createAccount(accountUserField.getValue(), accountPinField.getValue())
+                        local user = createAccount(accountUserField.getValue(), accountPinField.getValue())
                         if user ~= nil then
-                            basalt.debug(utils.createCard(user[1], user[2]))
+                            basalt.debug(createCard(user.from, user.pin))
                         else
-                            basalt.debug(user[2])
+                            basalt.debug("Failed to create account, check your input!")
                         end
                         createFrame:hide()
                     end)
@@ -95,7 +180,7 @@ sub[2]:addButton()
     :setPosition(20,9)
     :onClick(
         function()
-            basalt.debug(utils.getAccount())
+            basalt.debug(getAccount())
         end)
 
 sub[3]:addLabel()
@@ -120,7 +205,7 @@ sub[3]:addButton()
     :setPosition(20,14)
     :onClick(
         function()
-            basalt.debug(utils.createCard(cardUserField.getValue(), cardPinField.getValue()))
+            basalt.debug(createCard(cardUserField.getValue(), cardPinField.getValue()))
         end)
     
 

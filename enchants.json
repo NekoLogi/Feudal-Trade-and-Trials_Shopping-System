@@ -1,0 +1,217 @@
+[
+    {
+        "name": "Verfluchte Klinge",
+        "description": "Ein altes Schwert, das von dunklen Machten durchdrungen ist.",
+        "enchantments": "{id:sharpness,lvl:5}"
+    },
+    {
+        "name": "Gesegneter Schild",
+        "description": "Ein Schild, das von den Gottern selbst gesegnet wurde.",
+        "enchantments": "{id:unbreaking,lvl:3}"
+    },
+    {
+        "name": "Flammen von Drachenherz",
+        "description": "Die Flammen eines legendaren Drachen, eingefangen in einem Buch.",
+        "enchantments": "{id:fire_aspect,lvl:2}"
+    },
+    {
+        "name": "Woge des Meeres",
+        "description": "Beherrsche die Ozeane mit der Macht des Wassers.",
+        "enchantments": "{id:respiration,lvl:3}"
+    },
+    {
+        "name": "Blutdurst",
+        "description": "Ein Buch, das nach der Essenz des Lebens hungert.",
+        "enchantments": "{id:looting,lvl:3}"
+    },
+    {
+        "name": "Ritterehre",
+        "description": "Die Ehre eines langst verlorenen Ritters.",
+        "enchantments": "{id:protection,lvl:4}"
+    },
+    {
+        "name": "Wachter der Nacht",
+        "description": "Ein Schutz vor den Gefahren der Dunkelheit.",
+        "enchantments": "{id:night_vision,lvl:1}"
+    },
+    {
+        "name": "Heilige Flamme",
+        "description": "Ein Feuer, das von den Gottern selbst entzundet wurde.",
+        "enchantments": "{id:flame,lvl:1}"
+    },
+    {
+        "name": "Schattenlaufer",
+        "description": "Bewege dich lautlos wie ein Schatten in der Nacht.",
+        "enchantments": "{id:sneaking,lvl:3}"
+    },
+    {
+        "name": "Sturmbringer",
+        "description": "Rufe den Zorn des Sturms auf deine Feinde herab.",
+        "enchantments": "{id:channeling,lvl:1}"
+    },
+    {
+        "name": "Drachenhaut",
+        "description": "Rustung so stark wie die Schuppen eines Drachen.",
+        "enchantments": "{id:thorns,lvl:3}"
+    },
+    {
+        "name": "Eisiger Griff",
+        "description": "Ein Hauch des ewigen Winters.",
+        "enchantments": "{id:frost_walker,lvl:2}"
+    },
+    {
+        "name": "Ewiges Licht",
+        "description": "Ein Licht, das niemals erlischt.",
+        "enchantments": "{id:mending,lvl:1}"
+    },
+    {
+        "name": "Verborgene Macht",
+        "description": "Ein Buch, das seine wahre Kraft im Verborgenen halt.",
+        "enchantments": "{id:efficiency,lvl:5}"
+    },
+    {
+        "name": "Zephyrs Wind",
+        "description": "Die Schnelligkeit des Windes in deiner Hand.",
+        "enchantments": "{id:soul_speed,lvl:3}"
+    },
+    {
+        "name": "Runen des Vergessens",
+        "description": "Vergangene Magie, die in Runen eingeschlossen ist.",
+        "enchantments": "{id:curse_of_binding,lvl:1}"
+    },
+    {
+        "name": "Wachsamkeit des Falken",
+        "description": "Die scharfen Augen eines Jagers.",
+        "enchantments": "{id:piercing,lvl:4}"
+    },
+    {
+        "name": "Wurzel der Erde",
+        "description": "Die rohe Kraft der Erde in deiner Hand.",
+        "enchantments": "{id:efficiency,lvl:5}"
+    },
+    {
+        "name": "Ruf der Wildnis",
+        "description": "Hore die Rufe der wilden Natur.",
+        "enchantments": "{id:power,lvl:5}"
+    },
+    {
+        "name": "Herz des Waldes",
+        "description": "Das pulsierende Herz eines uralten Waldes.",
+        "enchantments": "{id:unbreaking,lvl:3}"
+    },
+    {
+        "name": "Schwurz der Tiefe",
+        "description": "Ein Buch, das die Dunkelheit der Tiefsee offenbart.",
+        "enchantments": "{id:depth_strider,lvl:3}"
+    },
+    {
+        "name": "Klinge des Drachenfeuers",
+        "description": "Eine machtige Klinge, durchzogen von Drachenfeuer.",
+        "enchantments": "{id:fire_aspect,lvl:2}"
+    },
+    {
+        "name": "Schatten des Nekromanten",
+        "description": "Macht, die von einem uralten Nekromanten herruhrt.",
+        "enchantments": "{id:looting,lvl:3}"
+    },
+    {
+        "name": "Eiserne Umarmung",
+        "description": "Kraft, die den frostigen Griff der ewigen Kalte verstarkt.",
+        "enchantments": "{id:frost_walker,lvl:2}"
+    },
+    {
+        "name": "Schutz des Phoenix",
+        "description": "Verleiht dir den Schutz und die Erneuerung eines Phonix.",
+        "enchantments": "{id:protection,lvl:4}"
+    },
+    {
+        "name": "Flugel des Himmels",
+        "description": "Schnelligkeit und Leichtigkeit der himmlischen Wesen.",
+        "enchantments": "{id:soul_speed,lvl:3}"
+    },
+    {
+        "name": "Erzengels Starke",
+        "description": "Die unerschutterliche Starke eines Erzengels.",
+        "enchantments": "{id:strength,lvl:2}"
+    },
+    {
+        "name": "Gunst der Natur",
+        "description": "Verleiht dir die Gunst und Kraft der Natur.",
+        "enchantments": "{id:efficiency,lvl:5}"
+    },
+    {
+        "name": "Schwachung des Feindes",
+        "description": "Macht, die deine Feinde langsam schwacht.",
+        "enchantments": "{id:weakness,lvl:1}"
+    },
+    {
+        "name": "Huter des Wissens",
+        "description": "Ein Buch, das altes und vergessenes Wissen bewahrt.",
+        "enchantments": "{id:knowledge,lvl:3}"
+    },
+    {
+        "name": "Hauch der Nacht",
+        "description": "Macht, die dir die Dunkelheit der Nacht offenbart.",
+        "enchantments": "{id:night_vision,lvl:1}"
+    },
+    {
+        "name": "Fesselnde Ketten",
+        "description": "Ein Buch, das Feinde in magische Ketten legt.",
+        "enchantments": "{id:binding_curse,lvl:1}"
+    },
+    {
+        "name": "Verborgene Weisheit",
+        "description": "Ein Buch mit geheimen und verborgenen Weisheiten.",
+        "enchantments": "{id:fortune,lvl:3}"
+    },
+    {
+        "name": "Elders Fluch",
+        "description": "Ein Fluch, der von den altesten Machten der Welt stammt.",
+        "enchantments": "{id:curse_of_vanishing,lvl:1}"
+    },
+    {
+        "name": "Segen des Anfuhrers",
+        "description": "Verleiht dir die Macht und Autoritat eines legendaren Anfuhrers.",
+        "enchantments": "{id:leadership,lvl:2}"
+    },
+    {
+        "name": "Fluch der Verdammnis",
+        "description": "Ein dunkler Fluch, der alle Hoffnung nimmt.",
+        "enchantments": "{id:curse_of_binding,lvl:1}"
+    },
+    {
+        "name": "Blitz des Zorns",
+        "description": "Ein Buch, das den Zorn des Blitzes entfesselt.",
+        "enchantments": "{id:channeling,lvl:1}"
+    },
+    {
+        "name": "Ritter von Eldoria",
+        "description": "Die unbesiegbare Macht eines legendaren Ritters.",
+        "enchantments": "{id:protection,lvl:4}"
+    },
+    {
+        "name": "Echo der Zeit",
+        "description": "Verleiht dir die Kraft, die Zeit selbst zu beeinflussen.",
+        "enchantments": "{id:rebounding,lvl:2}"
+    },
+    {
+        "name": "Sturm der Verwustung",
+        "description": "Ein Buch, das den Zorn eines machtigen Sturms entfesselt.",
+        "enchantments": "{id:power,lvl:5}"
+    },
+    {
+        "name": "Fluch der Verblendung",
+        "description": "Ein dunkler Fluch, der deine Feinde blendet.",
+        "enchantments": "{id:blindness,lvl:1}"
+    },
+    {
+        "name": "Seelenklinge",
+        "description": "Eine Klinge, die von den Seelen der Verstorbenen durchzogen ist.",
+        "enchantments": "{id:soul_bound,lvl:1}"
+    },
+    {
+        "name": "Zorn des Wachters",
+        "description": "Ein Buch, das den Zorn eines ewigen Wachters entfesselt.",
+        "enchantments": "{id:thorns,lvl:3}"
+    }
+]

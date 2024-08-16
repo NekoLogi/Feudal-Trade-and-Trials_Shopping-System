@@ -1,7 +1,10 @@
 from db.db import DB
+import json
 import uuid
 
-db = DB('192.168.178.49', 'neko', 'Bigmischa98!', 'minecraft')
+with open('db_data.json', 'r') as file:
+    data = json.load(file)
+db = DB(data['address'], data['username'], data['password'], data['database'])
 
 id = "test"
 user = "katse2"

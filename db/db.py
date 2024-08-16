@@ -173,11 +173,11 @@ class DB:
             print(err)
         return None
 
-    def shop_item_create(self, tier, display_name, name):
+    def shop_item_create(self, tier, display_name, name, description, enchantments, recycled):
         try:
             db = self.connect()
             cursor = db.cursor(dictionary=True)
-            cursor.execute(f"INSERT INTO shop (tier, displayname, name) VALUES ({tier}, '{display_name}', '{name}')")
+            cursor.execute(f"INSERT INTO shop (tier, displayname, name, description, enchantments, recycled) VALUES ({tier}, '{display_name}', '{name}', '{description}', '{enchantments}', '{recycled}')")
             db.commit()
             self.disconnect(db)
             return True
@@ -197,7 +197,20 @@ class DB:
         except mysql.connector.Error as err:
             print(err.msg)
             return None
-    
+        
+    def shop_get_item_by_id(self, id):
+        try:
+            db = self.connect()
+            cursor = db.cursor(dictionary=True)
+            query = f"SELECT * FROM shop WHERE id = {id}"
+            cursor.execute(query)
+            result = cursor.fetchone()
+            self.disconnect(db)
+            return result
+        except mysql.connector.Error as err:
+            print(err.msg)
+            return None
+
     def shop_get_item_by_tier(self, tier):
         try:
             db = self.connect()
@@ -264,11 +277,11 @@ class DB:
             return False
 
 # Item Roller
-    def roller_item_add(self, id, amount, sale):
+    def roller_item_add(self, id, tier, name, displayname, description, enchantments, amount, sale):
         try:
             db = self.connect()
             cursor = db.cursor(dictionary=True)
-            cursor.execute(f"INSERT INTO itemroll (name, amount, sale) VALUES ('{id}', {amount}, {sale})")
+            cursor.execute(f"INSERT INTO itemroll (id, tier, name, displayname, description, enchantments, amount, sale) VALUES ({id}, {tier}, '{name}', '{displayname}', '{description}', '{enchantments}', {amount}, {sale})")
             db.commit()
             self.disconnect(db)
             return True
@@ -305,7 +318,7 @@ class DB:
         try:
             db = self.connect()
             cursor = db.cursor(dictionary=True)
-            cursor.execute(f"CREATE TABLE itemroll (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, amount INT NOT NULL DEFAULT 0, sale INT NOT NULL DEFAULT 0, UNIQUE(name))")
+            cursor.execute("CREATE TABLE itemroll (id INT PRIMARY KEY, tier INT NOT NULL DEFAULT 1, name VARCHAR(255) NOT NULL, displayname VARCHAR(255) NOT NULL, description VARCHAR(1000) NOT NULL, enchantments VARCHAR(1000) NOT NULL, amount INT NOT NULL DEFAULT 0, sale INT NOT NULL DEFAULT 0);")
             db.commit()
             self.disconnect(db)
             return True
@@ -326,6 +339,36 @@ class DB:
             print(err.msg)
             return None
 
+    def roller_get_item_by_id(self, id):
+        try:
+            db = self.connect()
+            cursor = db.cursor(dictionary=True)
+            query = f"SELECT * FROM itemroll WHERE id = {id}"
+            cursor.execute(query)
+            result = cursor.fetchone()
+            self.disconnect(db)
+            return result
+        except mysql.connector.Error as err:
+            print(err.msg)
+            return None
+
+    def roller_item_purchase_by_id(self, id, amount):
+        item = self.roller_get_item_by_id(id)
+        if item == None:
+            return False
+        if item.get("amount") < amount:
+            return False
+        try:
+            db = self.connect()
+            cursor = db.cursor(dictionary=True)
+            query = f"UPDATE itemroll SET amount = amount - {amount} WHERE id = {id}"
+            cursor.execute(query)
+            db.commit()
+            self.disconnect(db)
+            return True
+        except mysql.connector.Error as err:
+            print(err.msg)
+            return False
 
 
 
